@@ -1,0 +1,10 @@
+- hosts: server
+  remote_user: root
+
+  - name: "安装应用"
+    yum: name=httpd
+  - name: "配置文件"
+    copy: src=/root/httpd.conf dest=/etc/httpd/conf/httpd.conf backup=yes
+  - name: "启动服务"
+    serivce: name=httpd state=started
+    

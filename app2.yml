@@ -1,0 +1,10 @@
+- hosts: server
+  remote_user: root
+  vars:
+    - pkname1: httpd
+    - pkname2: vsftpd
+  tasks:
+    - name: install pk
+      yum: name={{ pkname1 }}
+    - name: install pk
+      yum: name={{ pkname2 }}

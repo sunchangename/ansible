@@ -1,0 +1,19 @@
+#通过主控生产的密码文件更新密码
+---
+- hosts: web
+  gather_facts: yes
+  remote_user: root
+  vars_files:
+    - "/root/demo/nginx/password.yml"
+
+  tasks:
+    - name: "Change User password"
+      user:
+        name: "{{ username }}"
+        password: "{{ ps | password_hash('sha512') }}"
+        update_password: always
+
+
+#ansible-playbook chpass.yml -e 'username=root'
+password.yml
+ps: Aimer1234

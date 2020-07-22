@@ -1,0 +1,19 @@
+vars.yml #定义变量文件
+vars1: httpd
+vars2: vsftpd
+
+app.yml
+
+- hosts: server
+  remote_user: root
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: install app
+    yum: name={{ vars1 }}
+
+  - name: create file
+    file: name=/root/{{ vars2 }}.log state=touch
+    
+    

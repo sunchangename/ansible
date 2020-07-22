@@ -1,0 +1,8 @@
+- hosts: server
+  remote_user: root
+
+  tasks:
+    - name: create file
+      file: name=/root/newfile.txt state=touch
+    - name: create user
+      user: name=kangpan password=Aimer123 state=present

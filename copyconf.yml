@@ -1,0 +1,10 @@
+---
+- hosts: web
+  gather_facts: yes
+  remote_user: root
+
+  tasks:
+    - name: "Copy config to nginx"
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf

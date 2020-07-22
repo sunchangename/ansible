@@ -1,0 +1,18 @@
+#日期生产备份文件
+---
+- hosts: localhost
+  remote_user: root
+
+  tasks:
+    - name: get date
+      shell: date +%Y%m%d
+      register: localdate
+    - name: localcreatebackupdir
+      file:
+        path: /var/lib/awx/projects/aimer/{{ localdate.stdout }}
+        state: directory
+        mode: 0777
+    - name: copyconfigure
+      copy:
+        src: /var/lib/awx/projects/aimer/backup/
+        dest: /var/lib/awx/projects/aimer/{{ localdate.stdout }}/

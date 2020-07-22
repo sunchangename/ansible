@@ -1,0 +1,8 @@
+- hosts: server
+  remote_user: root
+
+  tasks:
+    - name: start db
+      service:
+        name: mariadb
+        state: started

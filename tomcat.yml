@@ -1,0 +1,24 @@
+---
+- hosts: web
+  gather_facts: yes
+  remote_user: root
+
+  tasks:
+    - name: "Install Java"
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
+    - name: "copy tomcat to webserver"
+      copy:
+        src: /root/demo/apache-tomcat-8.5.57.tar.gz
+        dest: /tmp/
+    - name: "tar tomcat"
+      unarchive:
+        src: /tmp/apache-tomcat-8.5.57.tar.gz
+        dest: /usr/local/
+    - name: "Rename tomcat dir name"
+      shell: mv /usr/local/apache-tomcat-8.5.57 /usr/local/tomcat8
+    - name: "start tomcat"
+      shell: /usr/local/tomcat8/bin/ startup.sh
+        cmd: nohup startup.sh &
+        chdir: /usr/local/tomcat8/bin/

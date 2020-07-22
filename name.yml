@@ -1,0 +1,8 @@
+- hosts: server
+  remote_user: root
+  vars:
+    - domain: lan
+
+  tasks:
+    - name: change hostname
+      hostname: name={{ host }}{{ port }}.{{ domain }}

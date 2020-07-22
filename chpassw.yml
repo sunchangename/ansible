@@ -1,0 +1,15 @@
+---
+- hosts: web
+  gather_facts: yes
+  remote_user: root
+
+  tasks:
+    - name: "Change User password"
+      user:
+        name: "{{ username }}"
+        password: "{{ newpass | password_hash('sha512') }}"
+        update_password: always
+
+
+#
+#ansible-playbook chpass.yml -e username=root -e newpass=Aimer123

@@ -1,0 +1,11 @@
+---
+- hosts: web
+  gather_facts: yes
+  remote_user: root
+
+  tasks:
+    - name: "Start nginx"
+      service:
+        name: nginx
+        state: started
+        enabled: yes

@@ -1,0 +1,19 @@
+---
+- hosts: web
+  remote_user: root
+  vars:
+    pk:
+    - httpd
+    - vim
+    - mariadb-server
+    - MySQL-python
+
+  tasks:
+    - name: epel
+      yum:
+        name: "{{ pk }}"
+    - name: start service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
