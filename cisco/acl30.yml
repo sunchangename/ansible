@@ -1,0 +1,11 @@
+---
+- hosts: sw
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: set acl
+      ios_config:
+        lines:
+          - 30 permit ip 192.168.10.0 0.0.0.255 any log
+        parents: ip access-list extended test

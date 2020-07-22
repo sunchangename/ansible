@@ -1,0 +1,13 @@
+---
+- hosts: sw
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: sh ver
+      ios_command:
+        commands: show version
+      register: version
+    - name: show
+      debug:
+        var: version

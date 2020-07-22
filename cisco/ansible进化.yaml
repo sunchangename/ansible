@@ -1,0 +1,68 @@
+ansible管理cisco ios
+hosts配置示例
+[sw1]
+192.168.88.33
+
+[sw2]
+192.168.88.56
+
+[sw:children]
+sw1
+sw2
+
+[sw:vars]
+ansible_ssh_user='cisco'
+ansible_ssh_pass='Aimer123'
+ansbile_connection=local
+
+ansible对ios模块支持
+ios_ntp            
+ios_vlans          
+ios_command        
+ios_lacp           
+ios_lag_interfaces 
+ios_l3_interface   
+ios_config         
+ios_system         
+ios_static_route   
+ios_interface      
+ios_banner         
+ios_l2_interface   
+ios_l2_interfaces  
+ios_logging        
+ios_interfaces     
+ios_bgp            
+ios_lldp_interfaces
+ios_l3_interfaces  
+ios_vlan           
+ios_vrf            
+ios_linkagg        
+ios_ping           
+ios_lldp_global    
+ios_lldp           
+ios_lacp_interfaces
+ios_user           
+ios_facts          
+
+Ad-Hoc
+ansible all -m ios_config -a 'lines="hostname test"'
+ansible all -m ios_config -a 'lines="ip address 2.2.2.2 255.255.255.0" parents="interface loop0"'
+ansible all -m ios_static_route 'prefix=192.168.2.0 mask=255.255.255.0 next_hop=10.0.0.1'
+
+
+playbook
+creds.yml#帐号信息
+username: admin
+password: cisco
+
+mail.yml
+mail: kangpan@aimer.com.cn
+mailpass: "xxxx"
+
+customer_config.yml#配置内容
+interfaces:
+  - {route: 10.1.1.201,ip:1.1.1.1,port:loop1}
+  - {route: 10.1.1.202,ip:2.2.2.2,port:loop2}
+  - {route: 10.1.1.203,ip:3.3.3.3,port:loop3}
+
+

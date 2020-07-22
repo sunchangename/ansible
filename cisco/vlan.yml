@@ -1,0 +1,17 @@
+---
+#交换机配置vlan，接口划入vlan
+- hosts: sw
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: create vlan_20
+      ios_vlan: vlan_id=20 name=test-vlan20
+    - name: create vlan_30
+      ios_vlan: vlan_id=30 name=test-vlan30
+    - name: configure g0/1 to vlan 20
+      ios_l2_interface: name=GigabitEthernet0/1 mode=access access_vlan=20
+    - name: configure g0/2 to vlan 30
+      ios_l2_interface: name=GigabitEthernet0/2 mode=access access_vlan=30
+    - name: save running to startup when modified
+      ios_config: save_when=modified

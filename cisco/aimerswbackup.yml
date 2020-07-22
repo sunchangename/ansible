@@ -1,0 +1,11 @@
+---
+- hosts: sw
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: configure backup path
+      ios_config:
+        backup: yes
+        backup_options:
+          dir_path: /backup

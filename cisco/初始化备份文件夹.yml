@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  
+  tasks:
+    - name: rm backup directory
+      file:
+        path: /var/lib/awx/projects/aimer/backup
+        state: absent
+    - name: create backup directory
+      file:
+        path: /var/lib/awx/projects/aimer/backup
+        state: directory

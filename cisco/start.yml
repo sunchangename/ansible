@@ -1,0 +1,39 @@
+---
+- hosts: sw
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: set name
+      ios_config: 
+        lines:
+          - hostname Aimer-SW
+    - name: configure manager vlan
+      ios_vlan: vlan_id=44 name=managevlan
+    - name: set interface ipv4
+      ios_config:
+        lines:
+          - description manager interface
+          - ip address 192.168.44.34 255.255.255.0
+        parents: interface vlan44
+    - name: configure ntp
+      ios_ntp: server=10.2.9.99 source_int=vlan44 state=present
+    - name: set gw
+      ios_config:
+        lines:
+          - ip default-gateway 192.168.88.2
+    - name: set timezone
+      ios_config:
+        lines:
+          - clock timezone GMT 8 0
+    - name: set log time
+      ios_config:
+        lines:
+          - service timestamps log datetime localtime
+    - name: set ssh
+      ios_config:
+        lines:
+          - ip domain-name aimergroup.com
+          - crypto key generate rsa modulus 1024
+    - name: save configure
+      ios_config: save_when=modified

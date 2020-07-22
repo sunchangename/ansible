@@ -1,0 +1,9 @@
+---
+- hosts: ios
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configure ntp serverr
+      ios_config:
+        lines: ntp server 192.168.52.1

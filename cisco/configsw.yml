@@ -1,0 +1,66 @@
+---
+- hosts: sw
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: set name
+      ios_config:
+        lines:
+          hostname Aimer-SW
+    - name: set user
+      ios_user:
+        name: admin
+        privilege: 15
+        configured_password: Aimer123
+        password_type: secret
+    - name: set managevlan
+      ios_vlan:
+        vlan_id: 88
+        name: manage
+    - name: set managevlan ipv4
+      ios_config:
+        lines:
+          - description manage
+          - ip address 192.168.88.33 255.255.255.0
+        parents: interface vlan88
+    - name: set gw
+      ios_config:
+        lines:
+          ip default-gateway 192.168.88.2
+    - name: set trunk
+      ios_l2_interface: 
+        name: gigabitethernet0/24
+        mode: trunk
+        state: present
+    - name: set ntp
+      ios_ntp:
+        server: 10.2.9.99
+        source_int: vlan88
+    - name: set dhcp snooping
+      ios_config:
+        lines:
+          - ip dhcp snooping trust
+        parents: interface gigabitethernet0/24
+    - name: set timezone
+      ios_config:
+        lines:
+          clock timezone GMT 8 0 
+    - name: set vty
+      ios_config:
+        lines:
+          - login local
+          - transport input all
+          - end
+        parents: line vty 0 14
+    - name: log time
+      ios_config:
+        lines:
+          - service timestamps log datetime localtime
+    - name: set ssh
+      ios_config:
+        lines:
+          - ip domain-name aimergroup.com
+          - crypto key generate rsa modulus 1024
+    - name: save
+      ios_config: save_when=modified

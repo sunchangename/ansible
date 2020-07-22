@@ -1,0 +1,26 @@
+#生产每日备份文件夹，拷贝备份文件至日期文件夹和apache文件夹下
+---
+- hosts: localhost
+  remote_user: root
+
+  tasks:
+    - name: get date
+      shell: date +%Y%m%d
+      register: localdate
+    - name: localcreatebackupdir
+      file:
+        path: /var/lib/awx/projects/aimer/{{ localdate.stdout }}
+        state: directory
+        mode: 0777
+    - name: copyconfigure
+      copy:
+        src: /var/lib/awx/projects/aimer/backup/
+        dest: /var/lib/awx/projects/aimer/{{ localdate.stdout }}/
+    - name: cleanrootbackup
+      file:
+        path: /var/www/html/backup
+        state: absent
+    - name: torootbackup
+      copy:
+       src: /var/lib/awx/projects/aimer/backup
+       dest: /var/www/html
